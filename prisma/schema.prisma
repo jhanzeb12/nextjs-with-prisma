@@ -1,0 +1,24 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Movie {
+    id           Int       @id @default(autoincrement())
+    title        String
+    genre        String
+    duration     Int
+    published_at DateTime?
+    Review       Review[]
+}
+
+model Review {
+    id      Int    @id @default(autoincrement())
+    review  String
+    movie   Movie  @relation(fields: [movieId], references: [id])
+    movieId Int
+}
